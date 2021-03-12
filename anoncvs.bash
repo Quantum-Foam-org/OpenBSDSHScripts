@@ -49,19 +49,25 @@ do
 					`cd /usr/xenocara`
 				;;
 			esac
-			CVS_OUT=`bash -c "$CVS_CMD"`
-			if [ $? -ne 0 ]
+			if [ $? -eq 0 ]
 			then
-				print_error "CVS command did not succeed"
-			else 
-				print_success "CVS command succeeded"
-			fi
-			CVS_OUT_FILE=`printf "%s/CVS_UPDATE_%s.txt" "$CVS_OUT_DIR" "$DATE_STAMP"` 
-			write_file "$CVS_OUT" "$CVS_OUT_FILE"
-			if [ $? -ne 0 ]
-			then
-				MSG=`printf "Unable to write CVS outut to log file %s" "$CVS_OUT_FILE"`
-				print_error "$MSG"
+				print_success "Changed to source directory"
+				CVS_OUT=`bash -c "$CVS_CMD"`
+				if [ $? -ne 0 ]
+				then
+					print_error "CVS command did not succeed"
+				else 
+					print_success "CVS command succeeded"
+				fi
+				CVS_OUT_FILE=`printf "%s/CVS_UPDATE_%s.txt" "$CVS_OUT_DIR" "$DATE_STAMP"` 
+				write_file "$CVS_OUT" "$CVS_OUT_FILE"
+				if [ $? -ne 0 ]
+				then
+					MSG=`printf "Unable to write CVS outut to log file %s" "$CVS_OUT_FILE"`
+					print_error "$MSG"
+				fi
+			else
+				print_error "Unable to change to source directory"
 			fi
 		;;
 		4)
