@@ -49,8 +49,13 @@ do
 					`cd /usr/xenocara`
 				;;
 			esac
-			echo $($CVS_CMD)
-			echo $CVS_OUT
+			CVS_OUT=`bash -c "$CVS_CMD"`
+			if [ $? -ne 0 ]
+			then
+				print_error "CVS command did not succeed"
+			else 
+				print_success "CVS command succeeded"
+			fi
 			CVS_OUT_FILE=`printf "%s/CVS_UPDATE_%s.txt" "$CVS_OUT_DIR" "$DATE_STAMP"` 
 			write_file "$CVS_OUT" "$CVS_OUT_FILE"
 			if [ $? -ne 0 ]
