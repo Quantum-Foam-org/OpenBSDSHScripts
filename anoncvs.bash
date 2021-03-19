@@ -9,12 +9,6 @@ add_lib "file.bash"
 add_lib "xmllint.bash"
 
 IFS=$'\n\t'
-XMLFILE=`realpath ./config/OpenBSD_config.xml`
-echo $XMLFILE
-xmllint_xpath "/OpenBSD/anonCvs/OpenBSD_Version/text()"
-OPENBSD_VERSION=$XMLOUTPUT
-xmllint_xpath "/OpenBSD/anonCvs/cvs_server/text()"
-CVS_SERVER=$XMLOUTPUT
 CVS_UP="/usr/bin/cvs -d %s -q up -Pd -r%s"
 RPATH=`realpath .`
 CVS_OUT_DIR=`printf "%s/%s" "$RPATH" "logs"`
@@ -30,6 +24,14 @@ ANON_CVS=(
 	"Get OpenBSD Version" 
 	"Change OpenBSD Version"
 	)
+
+XMLFILE=`realpath ./config/OpenBSD_config.xml`
+
+xmllint_xpath "/OpenBSD/anonCvs/OpenBSD_Version/text()"
+OPENBSD_VERSION=$XMLOUTPUT
+
+xmllint_xpath "/OpenBSD/anonCvs/cvs_server/text()"
+CVS_SERVER=$XMLOUTPUT
 
 print_message "Enter CVS repository to update"
 while [ true ]
