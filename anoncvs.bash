@@ -6,10 +6,15 @@ BASH_LIBS="../bash_library/lib/"
 
 add_lib "print.bash"
 add_lib "file.bash"
+add_lib "xmllint.bash"
 
 IFS=$'\n\t'
-OPENBSD_VERSION='OPENBSD_6_8'
-CVS_SERVER='anoncvs@anoncvs4.usa.openbsd.org:/cvs'
+XMLFILE=`realpath ./config/OpenBSD_config.xml`
+echo $XMLFILE
+xmllint_xpath "/OpenBSD/anonCvs/OpenBSD_Version/text()"
+OPENBSD_VERSION=$XMLOUTPUT
+xmllint_xpath "/OpenBSD/anonCvs/cvs_server/text()"
+CVS_SERVER=$XMLOUTPUT
 CVS_UP="/usr/bin/cvs -d %s -q up -Pd -r%s"
 RPATH=`realpath .`
 CVS_OUT_DIR=`printf "%s/%s" "$RPATH" "logs"`

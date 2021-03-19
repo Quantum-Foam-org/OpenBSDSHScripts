@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xs:schema 
+    version="1.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:element name="OpenBSD">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="anonCvs">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="OpenBSD_Version" type="xs:string" />
+                            <xs:element name="cvs_server" type="xs:string" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema> 

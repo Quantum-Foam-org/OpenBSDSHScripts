@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenBSD>
+	<anonCvs>
+		<OpenBSD_Version>OPENBSD_6_8</OpenBSD_Version>
+		<cvs_server>anoncvs@anoncvs4.usa.openbsd.org:/cvs</cvs_server>
+	</anonCvs>
+</OpenBSD>
