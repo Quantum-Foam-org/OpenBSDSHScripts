@@ -54,7 +54,7 @@ do
 					SRCDIR="/usr/ports"
 				;;
 				3)
-					SRCDIR="/usr/xenocarar"
+					SRCDIR="/usr/xenocara"
 				;;
 			esac
 			if [ -d $SRCDIR ]
