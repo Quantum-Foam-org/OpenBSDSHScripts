@@ -10,7 +10,7 @@ add_lib "xmllint.bash"
 
 IFS=$'\n\t'
 CVS_UP="/usr/bin/cvs -d %s -q up -Pd -r%s"
-RPATH=`realpath .`
+RPATH=`pwd -L .`
 CVS_OUT_DIR=`printf "%s/%s" "$RPATH" "logs"`
 DATE_STAMP=`date '+%Y-%m-%d'`
 CVS_PROMPT="OBSD"
@@ -25,7 +25,8 @@ ANON_CVS=(
 	"Change OpenBSD Version"
 	)
 
-XMLFILE=`realpath ./config/OpenBSD_config.xml`
+XMLFILE=`printf "%s/%s" "$RPATH" "./config/OpenBSD_config.xml"`
+
 
 xmllint_xpath "/OpenBSD/anonCvs/OpenBSD_Version/text()"
 OPENBSD_VERSION=$XMLOUTPUT
@@ -47,22 +48,24 @@ do
 			print_info "$MSG"
 			case "$BASH_LIB_PROMPT" in
 				1)
-					`cd /usr/src`
+					SRCDIR="/usr/src"
 				;;
 				2)
-					`cd /usr/ports`
+					SRCDIR="/usr/ports"
 				;;
 				3)
-					`cd /usr/xenocara`
+					SRCDIR="/usr/xenocarar"
 				;;
 			esac
-			if [ $? -eq 0 ]
+			if [ -d $SRCDIR ]
 			then
-				print_success "Changed to source directory"
-				CVS_OUT=`bash -c "$CVS_CMD"`
+				print_success "Source directory exists"
+				print_info "CVS command starting"
+				CVS_OUT=`bash -c "cd $SRCDIR && $CVS_CMD"`
 				if [ $? -ne 0 ]
 				then
 					print_error "CVS command did not succeed"
+					print_info "Make sure that you have already pre-loaded the SRC tree" 
 				else 
 					print_success "CVS command succeeded"
 				fi
